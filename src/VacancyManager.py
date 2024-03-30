@@ -60,13 +60,13 @@ class VacancyManager:
     '''
     Получение вакансии с наименьшим количеством сотрудников.
         - Сортировка всех вакансий от меньшего к большему по количеству сотрудников с помощь алгоритма быстрой сортировки
-        - Возвращение первого элеменента отсортированного списка
+        - Возвращение отсортированного списка вакансий
     '''
-    def get_vacancy_with_least_employees(self) -> Vacancy:
+    def get_vacancies_with_least_employees(self) -> list[Vacancy]:
         vacancies_with_no_header = self.vacancies[1:]
-        sorted_vacancies = vacancies_quick_sort(vacancies_with_no_header, 0, len(vacancies_with_no_header) - 1, 2)
+        sorted_vacancies = vacancies_quick_sort(vacancies_with_no_header, 2)
 
-        return sorted_vacancies[0]
+        return sorted_vacancies
     
     '''
     Запуск консольного поиска по всем вакансиям
