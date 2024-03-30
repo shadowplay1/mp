@@ -1,26 +1,17 @@
 from definitions import Vacancy
 from typing import Union
 
-def partition(vacancies: list[Vacancy], low: int, high: int, column_index: Union[0, 1, 2, 3, 4]) -> int:
-    pivot = vacancies[high][column_index]
- 
-    i = low - 1
- 
-    for j in range(low, high):
-        if vacancies[j][column_index] <= pivot:
- 
-            i = i + 1
- 
-            (vacancies[i][column_index], vacancies[j][column_index]) = (vacancies[j][column_index], vacancies[i][column_index])
- 
-    (vacancies[i + 1][column_index], vacancies[high][column_index]) = (vacancies[high][column_index], vacancies[i + 1][column_index])
-    return i + 1
+def compare_numbers(vacancy1: Vacancy, vacancy2: Vacancy, column_index) -> bool:
+    return vacancy1[column_index] - vacancy2[column_index]
 
+def vacancies_quick_sort(vacancies: list[Vacancy], column_index: Union[0, 1, 2, 3, 4]) -> list[Vacancy]:
+    if len(vacancies) <= 1:
+        return vacancies
 
-def vacancies_quick_sort(vacancies: list[Vacancy], low: int, high: int, column_index: Union[0, 1, 2, 3, 4]):
-    if low < high:
-        pi = partition(vacancies, low, high, column_index)
+    pivot_vacancy = vacancies[len(vacancies) // 2]
 
-        vacancies = vacancies_quick_sort(vacancies, pi + 1, high, column_index)
-    
-    return vacancies
+    left = [vacancy for vacancy in vacancies if compare_numbers(vacancy, pivot_vacancy, column_index) < 0]
+    middle = [vacancy for vacancy in vacancies if compare_numbers(vacancy, pivot_vacancy, column_index) == 0]
+    right = [vacancy for vacancy in vacancies if compare_numbers(vacancy, pivot_vacancy, column_index) > 0]
+
+    return vacancies_quick_sort(left, column_index) + middle + vacancies_quick_sort(right, column_index)
