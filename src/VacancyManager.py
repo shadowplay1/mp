@@ -92,13 +92,3 @@ class VacancyManager:
 
             for vacancy in filtered_compaines:
                 print(f'В {vacancy[4]} найдена вакансия: {vacancy[3]}. З/п составит: {vacancy[0]}')
-
-ns = []
-
-vacancy_manager = VacancyManager('data/vacancy.csv')
-for i in vacancy_manager.vacancies[1:]:
-    ns.append(i[2])
-
-sorted_data = vacancies_quick_sort(vacancy_manager.vacancies[1:], 2)
-print(sorted_data[0])
-print(sorted(vacancy_manager.vacancies[1:], key=lambda x: x[2])[0])
