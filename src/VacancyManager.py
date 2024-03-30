@@ -15,7 +15,7 @@ Salary;Work_Type;Company_Size;Role;Company
 import csv
 
 from definitions import Vacancy
-from quick_sort import quick_sort
+from quick_sort import vacancies_quick_sort
 
 class VacancyManager:
     '''
@@ -71,10 +71,47 @@ class VacancyManager:
             print(f'{company} - {role} - {salary}')
 
 
-    def print_vacancy_with_least_employees(self) -> None:
-        salaries: list[int]
+    '''
+    Получение вакансии с наименьшим количеством сотрудников.
+        - Сортировка всех вакансий от меньшего к большему по количеству сотрудников с помощь алгоритма быстрой сортировки
+        - Возвращение первого элеменента отсортированного списка
+    '''
+    def get_vacancy_with_least_employees(self) -> Vacancy:
+        vacancies_with_no_header = self.vacancies[1:]
+        sorted_vacancies = vacancies_quick_sort(vacancies_with_no_header, 0, len(vacancies_with_no_header) - 1, 2)
 
+        print(sorted(sorted_vacancies, key=lambda i: i[2])[0])
+        return sorted_vacancies[0]
+    
+    '''
+    Запуск консольного поиска по всем вакансиям
+        - Создание бесконечного цикла, внутри которого:
+            - спрашивается название компании
+            - все вакансии фильтруются по указанной компании
+            - если было введено слово "none" (регистр не важен), то программа закрывается
+            - если вакансия не найдена, то выводится соответствующее сообщение
+            - в ином случае, вывод всех вакансий указанной компании 
+    '''
+    def start_console_searching(self) -> None:
+        vacancies_with_no_header = self.vacancies[1:]
+
+        while True:
+            input_company_name = input('Введите название компании: ')
+            filtered_compaines = list(filter(lambda company: company[4] == input_company_name, vacancies_with_no_header))
+
+            if input_company_name.lower() == 'none':
+                break
+
+            if not len(filtered_compaines):
+                print('К сожалению, ничего не удалось найти')
+
+            for vacancy in filtered_compaines:
+                print(f'В {vacancy[4]} найдена вакансия: {vacancy[3]}. З/п составит: {vacancy[0]}')
+                
 
 
 vacancy_manager = VacancyManager('data/vacancy.csv')
-vacancy_manager.write_best('data/vacancy_new.csv')
+# vacancy_manager.write_best('data/vacancy_new.csv')
+vacancy_manager.start_console_searching()
+# vacancy_with_least_employees = vacancy_manager.get_vacancy_with_least_employees()
+# print(f'В компании {vacancy_with_least_employees[4]} есть заданная профессия: {vacancy_with_least_employees[3]}, з/п в такой компании составит: {vacancy_with_least_employees[0]}')
