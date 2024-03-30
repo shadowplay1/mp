@@ -1,17 +1,3 @@
-'''
-  (0)     (1)         (2)      (3)    (4) 
-Salary;Work_Type;Company_Size;Role;Company
-47200;стажер;26801;менеджер по социальным сетям;Icahn Enterprises
-'''
-
-'''
-Вы поняли, что хотите сначала проанализировать какие профессии самые востребованные и высокооплачиваемые в
- разных компаниях. Для этого создайте таблицу vacancy_new.csv 
- в которую запишите три столбца company, role, Salary. 
- При этом сама вакансия(Role) должна иметь максимальный размер зарплаты в компании. 
- После этого выведите топ-3 самых высокооплачиваемых профессий в формате: <компания> - <вакансия> - <зарплата>
-'''
-
 import csv
 
 from definitions import Vacancy
@@ -80,7 +66,6 @@ class VacancyManager:
         vacancies_with_no_header = self.vacancies[1:]
         sorted_vacancies = vacancies_quick_sort(vacancies_with_no_header, 0, len(vacancies_with_no_header) - 1, 2)
 
-        print(sorted(sorted_vacancies, key=lambda i: i[2])[0])
         return sorted_vacancies[0]
     
     '''
@@ -107,11 +92,3 @@ class VacancyManager:
 
             for vacancy in filtered_compaines:
                 print(f'В {vacancy[4]} найдена вакансия: {vacancy[3]}. З/п составит: {vacancy[0]}')
-                
-
-
-vacancy_manager = VacancyManager('data/vacancy.csv')
-# vacancy_manager.write_best('data/vacancy_new.csv')
-vacancy_manager.start_console_searching()
-# vacancy_with_least_employees = vacancy_manager.get_vacancy_with_least_employees()
-# print(f'В компании {vacancy_with_least_employees[4]} есть заданная профессия: {vacancy_with_least_employees[3]}, з/п в такой компании составит: {vacancy_with_least_employees[0]}')
